@@ -1,1 +1,8 @@
-print ("I am a student")
+text = 'Hello, dear, Alice'
+print(text.replace("e", "ooo"))
+
+
+
+
+
+

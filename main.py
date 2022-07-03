@@ -1,4 +1,10 @@
 import random
+from colorama import init
+
+
+init()
+from colorama import Fore, Back, Style
+print(Fore.MAGENTA)
 
 random_number = str(random.randint(1, 2))
 user_number = input("Угадай число (от 1 до 2): ")

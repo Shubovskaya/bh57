@@ -5,5 +5,4 @@ print(text.replace(" ", "-")) # first method
 words = text.split("-")
 print(words)
 text = "-".join(words)
-print(text)
-
+print(text)()

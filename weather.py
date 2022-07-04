@@ -10,7 +10,7 @@ async def getweather():
   weather = await client.find("Париж")
 
   celsius = (weather.current.temperature - 32) / 1.8
-  print(str(round(celsius)) + "°")
+  print(str(round(celsius)) + б)
 
   print(weather.location_name)
 

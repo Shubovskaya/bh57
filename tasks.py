@@ -1,26 +1,28 @@
-# import the module
+from aiogram import Bot, Dispatcher, executor, types
 import python_weather
-import asyncio
 
-async def getweather():
-  # declare the client. format defaults to metric system (celcius, km/h, etc.)
-  client = python_weather.Client(format=python_weather.IMPERIAL, locale="ru-Ru")
 
-  # fetch a weather forecast from a city
-  weather = await client.find("Париж")
+# bot init
+bot = Bot(token="5596003772:AAHfVeFWYIA4F48Mg_FQN66ealLp1jqxueU")
+dp = Dispatcher(bot)
+client = python_weather.Client(format=python_weather.IMPERIAL, locale="ru-Ru")
+# echo
+@dp.message_handler()
+async def echo(message: types.Message):
+    weather = await client.find(message.text)
+    celsius = round((weather.current.temperature - 32) / 1.8)
 
-  celsius = (weather.current.temperature - 32) / 1.8
-  print(str(round(celsius)) + "°")
+    resp_msg = weather.location_name + "\n"
+    resp_msg += f"Текущая температура: {celsius}°\n"
+    resp_msg += f"Состояние погоды: {weather.current.sky_text}"
 
-  print(weather.location_name)
+    if celsius <= 10:
+        resp_msg += "\n\nПрохладно! Одевайтесь потеплее!"
+    else:
+        resp_msg += "\n\nТепло! Одевайтесь полегче!"
 
-  # get the weather forecast for a few days
-  for forecast in weather.forecasts:
-    print(str(forecast.date), forecast.sky_text, forecast.temperature)
+    await(message.answer(resp_msg))
 
-  # close the wrapper once done
-  await client.close()
-
+# run long-polling
 if __name__ == "__main__":
-  loop = asyncio.get_event_loop()
-  loop.run_until_complete(getweather())
+    executor.start_polling(dp,skip_updates=True)

@@ -3,7 +3,7 @@
 для этих ключей будут браться с клавиатуры
 """
 
-key = int(input("Введите число: "))
+key = int(input("Введите имя: "))
 name: str = input("Введите имя: ")
 email: str = input("Введите email: ")
 
@@ -12,7 +12,7 @@ d = {
         name : email
     }
 }
-d = {key:{name:email} for key in d}
+d = ({key:{name:email} for key in d})
 print(d)
 
 

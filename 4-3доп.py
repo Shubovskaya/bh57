@@ -1,3 +1,3 @@
 n = int(input("Введите число: "))
-d = {key:{input("name: "):input("email: ")} for key in range(n)}
+d = {key:{"name":input("name: "), "email":input("email: ")} for key in range(n)}
 print(d)

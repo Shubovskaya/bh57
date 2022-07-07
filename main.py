@@ -17,3 +17,5 @@ else:
 
 
 
+for i in range(2, N, 2):
+   print()

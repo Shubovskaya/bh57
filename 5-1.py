@@ -4,12 +4,13 @@ from collections import Counter
 M: int = int(input("Введите число: "))
 K: int = int(input("Введите число: "))
 N: int = int(input("Введите число: "))
+i = 1
 
-for i in range(1, 101):
-    if i % M == 0 and i > K:
-        print(i)
-
-
+while N:
+    if K % M == 0:
+       print(K)
+       N -= 1
+    K += 1
 
 
 

@@ -15,16 +15,7 @@ print(Fore.MAGENTA)
     #print("Вы НЕ угадали!")
    # print(f"Было загадано число: {random_number}")
 
-M: int = int(input("Введите число: "))
-K: int = int(input("Введите число: "))
-N: int = int(input("Введите число: "))
-i = 1
 
-while N:
-    if K % M == 0:
-       print(K)
-       N -= 1
-    K += 1
 
 
 

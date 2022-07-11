@@ -1,5 +1,4 @@
 # Вывести четные числа от 2 до N по 5 в строку
-from collections import Counter
 
 N: int = int(input("Введите число: "))
 c = 0

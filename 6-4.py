@@ -3,10 +3,14 @@
 # незаконно
 
 text = [15, 1, 3, "Hello", 13, False, 5, "World", None, ","]
-#
-# text = [i for i in text if isinstance(i, str)]
-# print(text)
+new_text = []
 
-text_new = list(filter(lambda x: isinstance(str(x)), text))
-print(text_new)
+for i in text:
+    if isinstance(i, str):
+        new_text.append(i)
+print(new_text)
+
+
+
+
 

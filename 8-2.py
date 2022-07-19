@@ -1,14 +1,9 @@
-y= 3
-x= range(0,100)
-left = 0
-right = len(x)-1
-mid=int((left+right)/2)
+# Вывести в порядке возрастания цифры, входящие в десятичную запись натурального числа N.
 
-while x[mid]!=y:
-    if x[mid]>y:
-        right = mid
-        mid=int((left+right)/2)
-    if x[mid]<y:
-        left = mid
-        mid=int((left+right)/2)
-print(x)
+N = int(input("Введите число: "))
+
+def numbers_in_order(N):
+    all_numbers = str(N)
+    all_numbers = ",".join(sorted(all_numbers))
+    return all_numbers
+print(numbers_in_order(N))

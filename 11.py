@@ -1,14 +1,6 @@
-import sqlite3
+from engine import create_session
 
 class CRUDCategory:
-
-    @staticmethod
-    def create_session(func):
-        def wrapper(**kwargs):
-            conn = sqlite3.connect("db.db")
-            cur = conn.cursor()
-            return func(**kwargs, cur=cur, conn=conn)
-        return wrapper
 
     @staticmethod
     @create_session

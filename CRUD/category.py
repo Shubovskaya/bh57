@@ -1,4 +1,4 @@
-from . import create_session
+from .engine import create_session
 
 class CRUDCategory:
 
@@ -11,45 +11,13 @@ class CRUDCategory:
         """, (name, ))
         conn.commit()
 
-
-
-# conn = sqlite3.connect("db.db")
-# cur = conn.cursor()
-# cur.execute("""
-#     CREATE TABLE IF NOT EXISTS categories(
-#     id INTEGER PRIMARY KEY AUTOINCREMENT,
-#     name VARCHAR(45) NOT NULL
-#     );
-# """)
-# cur.execute("""
-#     CREATE TABLE IF NOT EXISTS roles(
-#     id INTEGER PRIMARY KEY AUTOINCREMENT,
-#     name VARCHAR(45) NOT NULL
-#     );
-# """)
+CRUDCategory.add(name="Ivan")
 #
-# cur.execute("""
-#     CREATE TABLE IF NOT EXISTS users(
-#     id INTEGER PRIMARY KEY AUTOINCREMENT,
-#     login VARCHAR(45) NOT NULL,
-#     password VARCHAR(50) NOT NULL,
-#     email VARCHAR(45),
-#     role_id INTEGER NOT NULL,
-#     FOREIGN KEY (role_id) REFERENCES roles(id)
-#     );
-# """)
-#
-# cur.execute("""
-#     CREATE TABLE IF NOT EXISTS articles(
-#     id INTEGER PRIMARY KEY AUTOINCREMENT,
-#     title VARCHAR(45) NOT NULL,
-#     body VARCHAR(3000) NOT NULL,
-#     category_id INTEGER NOT NULL,
-#     users_id INTEGER NOT NULL,
-#     FOREIGN KEY (category_id) REFERENCES categories(id)
-#     FOREIGN KEY (users_id) REFERENCES users(id)
-#     );
-# """)
-#
-# conn.commit()
+#     @staticmethod
+#     @create_session
+#     def get(category_id: int, cur-None, conn=None) -> tuple:
+#         cur.execute("""
+#         SELECT * FROM categories
+#         WHERE id = ?;
+#     """, (category_id, ))
 

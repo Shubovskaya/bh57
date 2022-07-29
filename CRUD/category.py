@@ -1,4 +1,4 @@
-from engine import create_session
+from . import create_session
 
 class CRUDCategory:
 
@@ -11,7 +11,7 @@ class CRUDCategory:
         """, (name, ))
         conn.commit()
 
-CRUDCategory.add(name="auto")
+
 
 # conn = sqlite3.connect("db.db")
 # cur = conn.cursor()

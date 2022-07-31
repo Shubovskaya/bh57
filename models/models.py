@@ -7,7 +7,7 @@ Base = declarative_base()
 
 
 class User(Base):
-    tablename: str = "users"
+    __tablename__: str = "users"
 
     id = Column(Integer, primary_key=True)
     user_name = Column(VARCHAR(24), unique=True, nullable=False)
@@ -16,7 +16,7 @@ class User(Base):
 
 
 class Category(Base):
-    tablename: str = "categories"
+    __tablename__: str = "categories"
 
     id = Column(SmallInteger, primary_key=True)
     name = Column(VARCHAR(24), nullable=False)
@@ -24,7 +24,7 @@ class Category(Base):
 
 
 class Article(Base):
-    tablename: str = "articles"
+    __tablename__: str = "articles"
 
     id = Column(SmallInteger, primary_key=True)
     category_id = Column(
@@ -38,7 +38,7 @@ class Article(Base):
 
 
 class UserArticle(Base):
-    tablename: str = "user_articles"
+    __tablename__ : str = "user_articles"
     id = Column(SmallInteger, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="NO ACTION"), nullable=False)
     article_id = Column(Integer, ForeignKey("articles.id", ondelete="CASCADE"), nullable=False)

@@ -3,14 +3,15 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
 from models import create_session, Category, Article
+from schemas import CategoryInDBSchema, CategorySchema
 
 
 class CRUDCategory(object):
 
     @staticmethod
     @create_session
-    def add(name: str, parent_id: int, session: Session = None) -> Category | None:
-        category = Category(name=name, parent_id=parent_id)
+    def add(category: CategorySchema, session: Session = None) -> CategoryInDBSchema | None:
+        category = Category(**category.dict())
         session.add(category)
         try:
             session.commit()
@@ -18,22 +19,22 @@ class CRUDCategory(object):
             pass
         else:
             session.refresh(category)
-            return category
+            return CategoryInDBSchema(**category.__dict__)
 
     @staticmethod
     @create_session
-    def get(category_id: int, session: Session = None) -> Category | None:
+    def get(category_id: int, session: Session = None) -> CategoryInDBSchema | None:
         category = session.execute(
             select(Category)
             .where(Category.id == category_id)
         )
         category = category.first()
         if category:
-            return category[0]
+            return CategoryInDBSchema(**category[0].__dict__)
 
     @staticmethod
     @create_session
-    def get_all(parent_id: int = None, session: Session = None) -> Category | list:
+    def get_all(parent_id: int = None, session: Session = None) -> CategoryInDBSchema | list:
         if parent_id:
             categories = session.execute(
                 select(Category)
@@ -45,7 +46,7 @@ class CRUDCategory(object):
                 select(Category)
                 .order_by(Category.id)
             )
-        return [category[0] for category in categories]
+        return [CategoryInDBSchema(**category[0].__dict__) for category in categories]
 
     @staticmethod
     @create_session
@@ -59,19 +60,15 @@ class CRUDCategory(object):
     @staticmethod
     @create_session
     def update(
-            category_id: int,
-            name: str = None,
-            parent_id: int = None,
+            category: CategoryInDBSchema,
             session: Session = None
     ) -> bool:
         session.execute(
             update(Category)
-            .where(Category.id == category_id)
-            .values(
-                name=name if name else Category.name,
-                parent_id=parent_id if parent_id else Category.parent_id
+            .where(Category.id == category.id)
+            .values(**category.dict())
             )
-        )
+
         try:
             session.commit()
         except IntegrityError:

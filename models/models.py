@@ -36,10 +36,14 @@ class Article(Base):
     title = Column(VARCHAR(50), nullable=False)
     body = Column(VARCHAR(1024), nullable=False)
     date_created = Column(TIMESTAMP, default=datetime.utcnow())
+    author_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
 
 
-class UserArticle(Base):
-    __tablename__ : str = "user_articles"
-    id = Column(SmallInteger, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="NO ACTION"), nullable=False)
+class ArticleComment(Base):
+    __tablename__: str = "article_comments"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     article_id = Column(Integer, ForeignKey("articles.id", ondelete="CASCADE"), nullable=False)
+    comment = Column(VARCHAR(140), nullable=False)
+    data_created = Column(TIMESTAMP, default=datetime.utcnow())

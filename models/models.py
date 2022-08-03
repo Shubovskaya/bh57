@@ -13,6 +13,7 @@ class User(Base):
     user_name = Column(VARCHAR(24), unique=True, nullable=False)
     hashed_password = Column(Text, nullable=False)
     is_blocked = Column(Boolean, default=False)
+    email = Column(Text, unique=True)
 
 
 class Category(Base):

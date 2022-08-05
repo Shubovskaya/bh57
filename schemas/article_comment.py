@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from datetime import datetime
 
 
-class ArticleComment(BaseModel):
+class ArticleCommentSchema(BaseModel):
     user_id: int = Field(ge=1, default=None)
     article_id: int = Field(ge=1, default=None)
     comment: str = Field(max_length=140)

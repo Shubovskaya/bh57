@@ -18,6 +18,7 @@
 from aiohttp import ClientSession
 import asyncio
 
+class AlfaBankApi:
 async def get_response():
     async with ClientSession() as session:
         response = await session.get(
@@ -27,6 +28,7 @@ async def get_response():
         print(response.status)
 
 
+class AlfaBankApi:
 async def main():
     loop = asyncio.get_running_loop()
     tasks = [loop.create_task(get_response()) for i in range(10)]

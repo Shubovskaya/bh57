@@ -1,6 +1,6 @@
 # import the module
 import python_weather
-import asyncio
+import file
 
 async def getweather():
   # declare the client. format defaults to metric system (celcius, km/h, etc.)

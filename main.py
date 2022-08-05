@@ -1,4 +1,5 @@
-from CRUD_алхимия import CRUDCategory, CRUDArticle, ArticleSchema
+from CRUD_алхимия import CRUDCategory, CRUDArticle, CRUDUser
+from schemas import ArticleSchema, UserSchema, ArticleCommentSchema
 from datetime import datetime
 
 # CRUDCategory.add(name="Стейки", parent_id=1)
@@ -13,5 +14,8 @@ from datetime import datetime
 # CRUDCategory.update(category=category)
 # print(CRUDCategory.get(category_id=1))
 
-CRUDArticle.add(article=ArticleSchema(category_id=1, title="Студенты", body="Расписание", date_created=datetime, author_id=1))
+# CRUDArticle.add(article=ArticleSchema(category_id=1, title="Студенты", body="Расписание", author_id=1))
+
+CRUDUser.add(user=UserSchema(user_name="Иван", hashed_password="Иванов", is_blocked=True, email="ivan@mail.ru"))
+CRUDUser.add(user=UserSchema(user_name="Sergey", hashed_password="Petrov", is_blocked=True, email="sergey@mail.ru"))
 

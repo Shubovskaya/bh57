@@ -12,10 +12,11 @@ class CRUDArticle(object):
     def add(article: ArticleSchema, session: Session = None) -> ArticleInDBSchema | None:
         article = Article(**article.dict())
         session.add(article)
-        try:
-            session.commit()
-        except IntegrityError:
-            pass
-        else:
-            session.refresh(article)
-            return ArticleInDBSchema(**article.__dict__)
+
+        # try:
+        #     session.commit()
+        # except IntegrityError:
+        #     pass
+        # else:
+        #     session.refresh(article)
+        #     return ArticleInDBSchema(**article.__dict__)

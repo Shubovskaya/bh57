@@ -1,4 +1,5 @@
-from CRUD_алхимия import CRUDCategory, CRUDArticle
+from CRUD_алхимия import CRUDCategory, CRUDArticle, ArticleSchema
+from datetime import datetime
 
 # CRUDCategory.add(name="Стейки", parent_id=1)
 # CRUDCategory.add(name="Роллы", parent_id=2)
@@ -12,5 +13,5 @@ from CRUD_алхимия import CRUDCategory, CRUDArticle
 # CRUDCategory.update(category=category)
 # print(CRUDCategory.get(category_id=1))
 
-CRUDArticle.add(category_id=1, title="Студенты", body="Расписание", date_created="дата", author_id=1)
+CRUDArticle.add(article=ArticleSchema(category_id=1, title="Студенты", body="Расписание", date_created=datetime, author_id=1))
 

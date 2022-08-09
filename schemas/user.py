@@ -6,6 +6,8 @@ class UserSchema(BaseModel):
     hashed_password: str = Field(max_length=24)
     is_blocked: bool
     email: str = Field(max_length=24)
+    role_id: str = Field(max_length=5)
+
 
 
 class UserInDBSchema(UserSchema):

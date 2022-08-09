@@ -14,6 +14,7 @@ class User(Base):
     hashed_password = Column(Text, nullable=False)
     is_blocked = Column(Boolean, default=False)
     email = Column(Text, unique=True)
+    role_id = Column(Text, unique=True)
 
 
 class Category(Base):

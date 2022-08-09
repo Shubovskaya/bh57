@@ -78,4 +78,12 @@ class CRUDArticle(object):
         else:
             return True
 
-
+    @staticmethod
+    @create_async_session
+    async def get_articles(category_id: int, session: AsyncSession = None) -> list[tuple[Category, Article]]:
+        response = await session.execute(
+            select(Category, Article)
+            .join(Article, Category.id == Article.category_id)
+            .where(Category.id == category_id)
+        )
+        return response.all()

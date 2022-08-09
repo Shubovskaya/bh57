@@ -1,22 +1,86 @@
-from sqlalchemy import select, update, delete, or_, and_
-from sqlalchemy.orm import Session
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy import select, update, delete
 
-from models import create_session, ArticleComment
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from models import create_async_session, ArticleComment
 from schemas import ArticleCommentInDBSchema, ArticleCommentSchema
 
 
 class CRUDArticleComment(object):
 
     @staticmethod
-    @create_session
-    def add(article_comments: ArticleCommentSchema, session: Session = None) -> ArticleCommentInDBSchema | None:
-        article_comments = ArticleComment(**article_comments.dict())
-        session.add(article_comments)
+    @create_async_session
+    async def add(article_comment: ArticleCommentSchema, session:
+    AsyncSession = None) -> ArticleCommentInDBSchema | None:
+        article_comment = ArticleComment(**article_comment.dict())
+        session.add(article_comment)
         try:
-            session.commit()
+            await session.commit()
         except IntegrityError:
             pass
         else:
-            session.refresh(article_comments)
-            return ArticleCommentInDBSchema(**article_comments.__dict__)
+            await session.refresh(article_comment)
+            return ArticleCommentInDBSchema(**article_comment.__dict__)
+
+    @staticmethod
+    @create_async_session
+    async def get(article_comment_id: int, session: AsyncSession = None) -> ArticleCommentInDBSchema | None:
+        article_comment = await session.execute(
+            select(ArticleComment)
+            .where(ArticleComment.id == article_comment_id)
+        )
+        article_comment = article_comment.first()
+        if article_comment:
+            return ArticleCommentInDBSchema(**article_comment[0].__dict__)
+
+    @staticmethod
+    @create_async_session
+    async def get_all(user_id: int = None, article_id: int = None, session:
+    AsyncSession = None) -> ArticleCommentInDBSchema | list:
+        if user_id:
+            article_comments = await session.execute(
+                select(ArticleComment)
+                .where(ArticleComment.user_id == user_id)
+                .order_by(ArticleComment.id)
+            )
+        elif article_id:
+            article_comments = await session.execute(
+                select(ArticleComment)
+                .where(ArticleComment.article_id == article_id)
+                .order_by(ArticleComment.id)
+            )
+        else:
+            article_comments = await session.execute(
+                select(ArticleComment)
+                .order_by(ArticleComment.id)
+            )
+        return [ArticleCommentInDBSchema(**article_comment[0].__dict__) for article_comment in article_comments]
+
+    @staticmethod
+    @create_async_session
+    async def delete(article_comment_id: int, session: AsyncSession = None) -> None:
+        await session.execute(
+            delete(ArticleComment)
+            .where(ArticleComment.id == article_comment_id)
+        )
+        await session.commit()
+
+    @staticmethod
+    @create_async_session
+    async def update(
+            article_comment: ArticleCommentInDBSchema,
+            session: AsyncSession = None
+    ) -> bool:
+        await session.execute(
+            update(ArticleComment)
+            .where(ArticleComment.id == article_comment.id)
+            .values(**article_comment.dict())
+        )
+
+        try:
+            await session.commit()
+        except IntegrityError:
+            return False
+        else:
+            return True

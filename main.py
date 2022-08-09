@@ -20,5 +20,10 @@ from datetime import datetime
 # CRUDUser.add(user=UserSchema(user_name="Иван", hashed_password="Иванов", is_blocked=True, email="ivan@mail.ru"))
 # CRUDUser.add(user=UserSchema(user_name="Sergey", hashed_password="Petrov", is_blocked=True, email="sergey@mail.ru"))
 
+import asyncio
+
 async def main():
-    res = await CRUD
+    res = await CRUDUser.get_all()
+
+asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+asyncio.run(main())

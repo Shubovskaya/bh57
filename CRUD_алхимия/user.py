@@ -45,7 +45,7 @@ class CRUDUser(object):
         else:
             users = await session.execute(
                 select(Article, Category, ArticleComment)
-                .order_by(Article.id, Category.id, ArticleComment.id)
+                # .order_by(Article.id, Category.id, ArticleComment.id)
             )
         return [UserInDBSchema(**user[0].__dict__) for user in users]
 
@@ -77,3 +77,12 @@ class CRUDUser(object):
         else:
             return True
 
+    @staticmethod
+    @create_async_session
+    async def get_result(article_id: int, session: AsyncSession = None) -> list[tuple[Article, ArticleComment]]:
+        response = await session.execute(
+            select(Article, ArticleComment)
+            .join(ArticleComment, Article.id == ArticleComment.article_id)
+            .where(Article.id == article_id)
+        )
+        return response.all()

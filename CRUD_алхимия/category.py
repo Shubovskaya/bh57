@@ -88,5 +88,3 @@ class CRUDCategory(object):
         return response.all()
 
 
-
-pip install aiohttp

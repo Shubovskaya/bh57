@@ -22,8 +22,15 @@ from datetime import datetime
 
 import asyncio
 
-async def main():
-    res = await CRUDUser.get_all()
+# async def main():
+#     res = await CRUDArticle.get_all()
+#     print(res)
+# asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+# asyncio.run(main())
 
+async def main():
+    res = await CRUDArticle.get_all()
+    print(res)
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 asyncio.run(main())
+

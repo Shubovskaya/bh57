@@ -35,19 +35,19 @@ class CRUDUser(object):
 
     @staticmethod
     @create_async_session
-    async def get_all(role_id: int = None, session: AsyncSession = None) -> UserInDBSchema | list:
+    async def get_all(role_id: int = None, session: AsyncSession = None) -> list[tuple[Article, ArticleComment]]:
         if role_id:
             users = await session.execute(
                 select(Article)
-                .where(Article.category_id == role_id)
+                .where(Article.role_id == role_id)
                 .order_by(Article.id)
             )
         else:
             users = await session.execute(
-                select(Article, Category, ArticleComment)
-                # .order_by(Article.id, Category.id, ArticleComment.id)
-            )
-        return [UserInDBSchema(**user[0].__dict__) for user in users]
+                select(Article, ArticleComment)
+                .join(ArticleComment, Article.id == ArticleComment.article_id)
+             )
+        return users
 
     @staticmethod
     @create_async_session
@@ -77,12 +77,12 @@ class CRUDUser(object):
         else:
             return True
 
-    @staticmethod
-    @create_async_session
-    async def get_result(article_id: int, session: AsyncSession = None) -> list[tuple[Article, ArticleComment]]:
-        response = await session.execute(
-            select(Article, ArticleComment)
-            .join(ArticleComment, Article.id == ArticleComment.article_id)
-            .where(Article.id == article_id)
-        )
-        return response.all()
+    # @staticmethod
+    # @create_async_session
+    # async def get_all(user_id: int, session: AsyncSession = None) -> list[tuple[Article, ArticleComment]]:
+    #     response = await session.execute(
+    #         select(Article, ArticleComment)
+    #         .join(ArticleComment, Article.id == ArticleComment.article_id)
+    #         .where(Article.id == user_id)
+    #     )
+    #     return response.all()

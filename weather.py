@@ -8,7 +8,7 @@ async def getweather():
   client = python_weather.Client(format=python_weather.IMPERIAL, locale="ru-Ru")
 
   # fetch a weather forecast from a city
-  weather = await client.find("Париж")
+  weather = await client.find("Минск")
 
   celsius = (weather.current.temperature - 32) / 1.8
   print(str(round(celsius)) + "°")
@@ -23,5 +23,6 @@ async def getweather():
   await client.close()
 
 if __name__ == "__main__":
+  asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
   loop = asyncio.get_event_loop()
   loop.run_until_complete(getweather())

@@ -77,12 +77,12 @@ class CRUDUser(object):
         else:
             return True
 
-    # @staticmethod
-    # @create_async_session
-    # async def get_all(user_id: int, session: AsyncSession = None) -> list[tuple[Article, ArticleComment]]:
-    #     response = await session.execute(
-    #         select(Article, ArticleComment)
-    #         .join(ArticleComment, Article.id == ArticleComment.article_id)
-    #         .where(Article.id == user_id)
-    #     )
-    #     return response.all()
+    @staticmethod
+    @create_async_session
+    async def get_all(user_id: int, session: AsyncSession = None) -> list[tuple[Article, ArticleComment]]:
+        response = await session.execute(
+            select(Article, ArticleComment)
+            .join(ArticleComment, Article.id == ArticleComment.article_id)
+            .where(Article.id == user_id)
+        )
+        return response.all()

@@ -1,4 +1,3 @@
-# import the module
 import asyncio
 
 import python_weather
@@ -12,7 +11,7 @@ async def getweather():
   weather = await client.find("Париж")
 
   celsius = (weather.current.temperature - 32) / 1.8
-  print(str(round(celsius)) + 6)
+  print(str(round(celsius)) + "°")
 
   print(weather.location_name)
 

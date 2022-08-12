@@ -6,9 +6,11 @@ bot = Bot(token="5596003772:AAHfVeFWYIA4F48Mg_FQN66ealLp1jqxueU")
 dp = Dispatcher(bot)
 client = python_weather.Client(format=python_weather.IMPERIAL, locale="ru-Ru")
 
+
 @dp.message_handler()
 async def echo(message: types.Message):
     weather = await client.find(message.text)
+    print(weather)
     celsius = round((weather.current.temperature - 32) / 1.8)
 
     resp_msg = weather.location_name + "\n"
@@ -20,7 +22,8 @@ async def echo(message: types.Message):
     else:
         resp_msg += "\n\nТепло! Одевайтесь полегче!"
 
-    await(message.answer(resp_msg))
+    await message.answer(resp_msg)
+
 
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True)
